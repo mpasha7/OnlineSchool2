@@ -1,0 +1,55 @@
+﻿@model OnlineSchool2.Models.LessonsListViewModel
+
+@{
+    ViewData["Title"] = Model.Course?.Title;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>@Model.Course?.Description</p>
+
+<h4>Уроки</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Описание
+            </th>
+            <th>
+                Видео
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Lessons) {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VideoLink)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Create" asp-route-courseid="@Model.Course?.Id">Добавить урок</a>
+</p>
+
+<div>
+    <a asp-controller="Courses" asp-action="Index">Назад к списку курсов</a>
+</div>

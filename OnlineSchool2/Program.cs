@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using OnlineSchool2.Models;
+
 namespace OnlineSchool2
 {
     public class Program
@@ -5,12 +8,16 @@ namespace OnlineSchool2
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<SchoolContext>(opts =>
+            {
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("SchoolConnection"));
+                opts.EnableSensitiveDataLogging(true);
+            });
+            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             var app = builder.Build();
 
 
-            // Configure the HTTP request pipeline.
+            
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -26,6 +33,7 @@ namespace OnlineSchool2
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            SeedData.SeedDatabase(app);
             app.Run();
         }
     }
