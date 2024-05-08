@@ -2,54 +2,60 @@
 
 @{
     ViewData["Title"] = Model.Course?.Title;
+    string bg = "";
+    int counter = 0;
 }
 
-<h1>@ViewData["Title"]</h1>
+<section class="for_pattern">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center text-uppercase color2 pb-2">
+                    @ViewData["Title"]
+                </h1>
+            </div>
+            <div class="col-12 text-center container-fluid">
+                <a asp-action="Create" asp-route-courseid="@Model.Course.Id" class="btn btn_itd text-uppercase text-center mx-2">Добавить урок</a>
+                <a asp-controller="Courses" asp-action="Index" class="btn btn-sm btn_itd_outline text-uppercase text-center mx-2">К списку курсов</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-<p>@Model.Course?.Description</p>
-
-<h4>Уроки</h4>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Название
-            </th>
-            <th>
-                Описание
-            </th>
-            <th>
-                Видео
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Lessons) {
-        <tr>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VideoLink)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@foreach (var item in Model.Lessons)
+{
+    <section class="back@(counter % 2)">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-3">
+                    <a asp-controller="Lessons" asp-action="Details" asp-route-id="@item.Id" class="btn">
+                        <h2 class="text-center text-uppercase color@((counter % 2) + 1)">@item.Title</h2>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="color@((counter % 2) + 1)">@item.Description</h5>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center container-fluid">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn_itd_outline text-uppercase text-center mx-3">Редактировать</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn_itd_outline text-uppercase text-center mx-3">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    counter++;
 }
-    </tbody>
-</table>
 
-<p>
-    <a asp-action="Create" asp-route-courseid="@Model.Course?.Id">Добавить урок</a>
-</p>
-
-<div>
-    <a asp-controller="Courses" asp-action="Index">Назад к списку курсов</a>
-</div>
+<section class="for_pattern">
+    <div class="container">
+        <div class="row py-4">
+            <div class="col-12 text-center container-fluid">
+                <a asp-action="Create" asp-route-courseid="@Model.Course.Id" class="btn btn_itd text-uppercase text-center mx-2">Добавить урок</a>
+                <a asp-controller="Courses" asp-action="Index" class="btn btn-sm btn_itd_outline text-uppercase text-center mx-2">К списку курсов</a>
+            </div>
+        </div>
+    </div>
+</section>

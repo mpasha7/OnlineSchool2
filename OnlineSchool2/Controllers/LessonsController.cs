@@ -50,8 +50,9 @@ namespace OnlineSchool2.Controllers
         // GET: Lessons/Create
         public IActionResult Create(int? courseid)
         {
-            return View(new Lesson
+            return View(new LessonViewModel
             {
+                Lesson = new Lesson(),
                 Course = db.Courses.FirstOrDefault(c => c.Id == courseid)
             });
         }

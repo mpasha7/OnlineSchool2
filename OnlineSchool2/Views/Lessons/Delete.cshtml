@@ -1,40 +1,43 @@
 ﻿@model OnlineSchool2.Models.Lesson
 
 @{
-    ViewData["Title"] = Model.Course.Title ?? "Not found course";
+    ViewData["Title"] = "Удаление урока";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<h3>Вы действительно хотите удалить этот урок?</h3>
-
-<div>
-    <h4>@Model.Title</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VideoLink)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VideoLink)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete" asp-route-courseid="@Model.Course.Id">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index" asp-route-courseid="@Model.Course.Id">Назад к списку уроков</a>
-    </form>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-2 mb-3">
+            <h1 class="text-center text-uppercase color1">
+                @ViewData["Title"]
+            </h1>
+        </div>
+    </div>
 </div>
+
+<section class="back0">
+    <div class="container">
+        <div class="row">
+            <h2 class="col-12 text-center color2 pb-1">
+                @Model.Title
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h4 class="text-center color1 my-3">
+                    Вы хотите удалить этот урок?
+                </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 container-fluid text-center mt-1 mb-5">
+                <form asp-action="Delete" asp-route-courseid="@Model.Course.Id">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <input type="submit" value="Удалить" class="btn btn_itd text-uppercase text-center mx-3" />
+                        <a asp-action="Index" asp-route-courseid="@Model.Course.Id" class="btn btn-sm btn_itd_outline text-uppercase text-center mx-3">К списку уроков</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

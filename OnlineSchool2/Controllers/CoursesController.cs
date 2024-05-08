@@ -12,10 +12,12 @@ namespace OnlineSchool2.Controllers
     public class CoursesController : Controller
     {
         private readonly SchoolContext db;
+        private IWebHostEnvironment env;
 
-        public CoursesController(SchoolContext context)
+        public CoursesController(SchoolContext context, IWebHostEnvironment env)
         {
-            db = context;
+            this.db = context;
+            this.env = env;
         }
 
         // GET: Courses
@@ -57,7 +59,18 @@ namespace OnlineSchool2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Add(course);
+                IFormFileCollection files = HttpContext.Request.Form.Files;
+                foreach (var file in files)
+                {
+                    DateTime d = DateTime.Now;
+                    string path = $"/photos/{d.ToString("yy_MM_dd")}_{d.ToString("hh_mm_ss")}_{course.Title + Path.GetExtension(file.FileName)}";
+                    using (var fileStream = new FileStream(env.WebRootPath + path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    course.PhotoPath = path;                    
+                }
+                await db.Courses.AddAsync(course);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -77,6 +90,7 @@ namespace OnlineSchool2.Controllers
             {
                 return NotFound();
             }
+            ViewData["OldPath"] = course.PhotoPath;
             return View(course);
         }
 
@@ -85,7 +99,7 @@ namespace OnlineSchool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,PhotoPath")] Course course)
+        public async Task<IActionResult> Edit(string path, int id, [Bind("Id,Title,Description,PhotoPath")] Course course)
         {
             if (id != course.Id)
             {
@@ -93,7 +107,23 @@ namespace OnlineSchool2.Controllers
             }
 
             if (ModelState.IsValid)
-            {
+            {                
+                IFormFileCollection files = HttpContext.Request.Form.Files;
+                if (files.Count > 0)
+                {
+                    DeletePhoto(path);
+                    foreach (var file in files)
+                    {
+                        DateTime d = DateTime.Now;
+                        path = $"/photos/{d.ToString("yy_MM_dd")}_{d.ToString("hh_mm_ss")}_{course.Title + Path.GetExtension(file.FileName)}";
+                        using (var fileStream = new FileStream(env.WebRootPath + path, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+                    }
+                }
+                course.PhotoPath = path;
+
                 try
                 {
                     db.Update(course);
@@ -136,16 +166,35 @@ namespace OnlineSchool2.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
+            if (id is null || db.Courses == null)
+            {
+                return NotFound();
+            }
+
             var course = await db.Courses.FindAsync(id);
             if (course != null)
             {
-                db.Courses.Remove(course);
-            }
+                string? photoPath = course.PhotoPath;
+                DeletePhoto(photoPath);
 
-            await db.SaveChangesAsync();
+                db.Courses.Remove(course);
+                await db.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
+        }
+
+        private void DeletePhoto(string? photoPath)
+        {
+            if (photoPath is not null)
+            {
+                FileInfo file = new FileInfo(env.WebRootPath + photoPath);
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
+            }
         }
 
         private bool CourseExists(int id)

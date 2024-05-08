@@ -1,42 +1,55 @@
 ﻿@model OnlineSchool2.Models.Course
 
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = $"Редактирование курса";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<h4>Редактирование курса</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhotoPath" class="control-label"></label>
-                <input asp-for="PhotoPath" class="form-control" />
-                <span asp-validation-for="PhotoPath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container">
+    <div class="row">
+        <div class="col-12 py-2">
+            <h1 class="text-center text-uppercase color1 pb-3">
+                @ViewData["Title"]
+            </h1>
+            <h2 class="text-center color1 pb-1">
+                @Model.Title
+            </h2>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Назад к списку курсов</a>
+    <div class="row">
+        <div class="col-9 container-fluid">
+            <form asp-action="Edit" asp-route-path="@ViewData["OldPath"]" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"><h5 class="color2">Название курса</h5></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label mt-3"><h5 class="color2">Описание</h5></label>
+                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PhotoPath" class="control-label mt-3"><h5 class="color2">Фото курса</h5></label>
+                    <input type="file" asp-for="PhotoPath" class="form-control" />
+                    <span asp-validation-for="PhotoPath" class="text-danger"></span>
+                </div>
+
+                <div class="container-fluid text-center mt-4 mb-5">
+                    <div class="form-group">
+                        <input type="submit" value="Сохранить" class="btn btn_itd text-uppercase text-center mx-3" />
+                        <a asp-action="Index" class="btn btn-sm btn_itd_outline text-uppercase text-center mx-3">К списку курсов</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

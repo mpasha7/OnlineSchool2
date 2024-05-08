@@ -1,5 +1,140 @@
+:root {
+    --color1: #05b1b1;
+    --color2: #52339a;
+}
+
+.color1 {
+    color: var(--color1);
+}
+
+.color2 {
+    color: var(--color2);
+}
+
+.bg1 {
+    background-color: var(--color1);
+}
+
+.bg2 {
+    background-color: var(--color2);
+}
+
+.back0 {
+    background-color: #eee;
+}
+
+.back1 {
+    background-color: #fff;
+}
+
+section {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+.gradient {
+    background: var(--color2);
+    background: -moz-linear-gradient(left, var(--color2) 0%, var(--color1) 100%);
+    background: -webkit-linear-gradient(left, var(--color2) 0%, var(--color1) 100%);
+    background: linear-gradient(to right, var(--color2) 0%, var(--color1) 100%);
+}
+
+.btn_itd {
+    display: inline-flex;
+    max-width: 200px;
+    margin: 0 auto;
+    padding: 8px 30px;
+    color: var(--bs-white);
+    background-color: var(--color2);
+}
+
+    .btn_itd:hover {
+        color: var(--bs-white);
+        background-color: var(--color1);
+    }
+
+.btn_itd_outline {
+    display: inline-flex;
+    max-width: 200px;
+    margin: 0 auto;
+    padding: 8px 30px;
+    color: var(--color2);
+    border: 3px solid var(--color2);    
+}
+
+    .btn_itd_outline:hover {
+        color: var(--color1);
+        border: 3px solid var(--color1);
+    }
+
+.itd_img {
+    width: 500px;
+}
+
+.itd_big_img {
+    width: 600px;
+}
+
+.for_pattern {
+    background: url(../img/hymnastic_pattern.png);
+}
+
+input, textarea {
+    border: unset;
+    border: 2px solid #c3c3c3;
+    outline: none;
+}
+
+    input:hover {
+        border-color: var(--color1);
+    }
+    textarea:hover {
+        border-color: var(--color1);
+    }
+
+    input:focus {
+        border-color: var(--color1);
+    }
+    textarea:focus {
+        border-color: var(--color1);
+    }
+
+    input[type=file]::file-selector-button {
+        border: none;
+        padding: 10px;
+        background-color: #c3c3c3;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        input[type=file]::file-selector-button:hover {
+            background-color: var(--color1);
+        }
+
+/* iFrame */
+.embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+    .embed-container iframe, .embed-container object, .embed-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+
+
+
+/*Addition*/
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
