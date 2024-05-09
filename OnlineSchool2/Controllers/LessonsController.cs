@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,7 +24,7 @@ namespace OnlineSchool2.Controllers
         {
             LessonsListViewModel model = new LessonsListViewModel
             {
-                Lessons = await db.Lessons.Where(l => l.Course.Id == courseid).ToListAsync(),
+                Lessons = await db.Lessons.Where(l => l.Course.Id == courseid).OrderBy(l => l.Number).ToListAsync(),
                 Course = await db.Courses.FirstOrDefaultAsync(c => c.Id == courseid)
             };
             return View(model);
@@ -50,10 +51,12 @@ namespace OnlineSchool2.Controllers
         // GET: Lessons/Create
         public IActionResult Create(int? courseid)
         {
+            int? maxNumber = (db.Lessons.Where(l => l.Course.Id == courseid).Max(l => l.Number) ?? 0) + 1;
             return View(new LessonViewModel
             {
-                Lesson = new Lesson(),
-                Course = db.Courses.FirstOrDefault(c => c.Id == courseid)
+                Lesson = new Lesson { Number = maxNumber },
+                Course = db.Courses.FirstOrDefault(c => c.Id == courseid),
+                TargetNumber = maxNumber
             });
         }
 
@@ -62,10 +65,19 @@ namespace OnlineSchool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int? courseid, [Bind("Id,Title,Description,VideoLink")] Lesson lesson)
+        public async Task<IActionResult> Create(int courseid, int maxnumber, [Bind("Id,Number,Title,Description,VideoLink")] Lesson lesson)
         {
             if (ModelState.IsValid)
             {
+                if (lesson.Number is null)
+                {
+                    lesson.Number = maxnumber;
+                }
+                if (lesson.Number < maxnumber)
+                {
+                    await LessonNumbersShiftRight(lesson.Number, courseid);
+                }
+
                 Course? course = await db.Courses.FirstOrDefaultAsync(c => c.Id == courseid);
                 lesson.Course = course;
                 lesson.Id = default;
@@ -75,6 +87,17 @@ namespace OnlineSchool2.Controllers
                 return RedirectToAction(nameof(Index), new { courseid = courseid });
             }
             return View(lesson);
+        }
+
+        private async Task LessonNumbersShiftRight(int? lesNumber, int courseid)
+        {
+            var shiftLessons = db.Lessons.Where(l => l.Course.Id == courseid && l.Number >= lesNumber);
+            foreach (var les in shiftLessons)
+            {
+                les.Number++;
+                db.Update(les);
+            }
+            await db.SaveChangesAsync();
         }
 
         // GET: Lessons/Edit/5
@@ -90,7 +113,11 @@ namespace OnlineSchool2.Controllers
             {
                 return NotFound();
             }
-            return View(lesson);
+            return View(new LessonViewModel
+            {
+                Lesson = lesson,
+                TargetNumber = lesson.Number
+            });
         }
 
         // POST: Lessons/Edit/5
@@ -98,7 +125,7 @@ namespace OnlineSchool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? courseid, int id, [Bind("Id,Title,Description,VideoLink")] Lesson lesson)
+        public async Task<IActionResult> Edit(int? courseid, int oldnumber, int id, [Bind("Id,Number,Title,Description,VideoLink")] Lesson lesson)
         {
             if (id != lesson.Id)
             {
@@ -109,11 +136,21 @@ namespace OnlineSchool2.Controllers
             {
                 try
                 {
+                    if (lesson.Number is null)
+                    {
+                        lesson.Number = oldnumber;
+                    }
+                    int? lesNumber = lesson.Number;                    
+
                     Course? course = await db.Courses.FirstOrDefaultAsync(c => c.Id == courseid);
                     lesson.Course = course;
-
                     db.Update(lesson);
                     await db.SaveChangesAsync();
+
+                    if (lesson.Number != oldnumber)
+                    {
+                        await LessonNumbersAdjust(lesNumber, oldnumber, courseid, lesson.Id);
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,6 +166,30 @@ namespace OnlineSchool2.Controllers
                 return RedirectToAction(nameof(Index), new { courseid = courseid });
             }
             return View(lesson);
+        }
+
+        private async Task LessonNumbersAdjust(int? lesNumber, int? oldnumber, int? courseid, int id)
+        {
+            int? maxNumber = db.Lessons.Where(l => l.Course.Id == courseid).Max(l => l.Number);/////////
+            if (lesNumber < oldnumber)
+            {
+                var shiftLessons = db.Lessons.Where(l => l.Course.Id == courseid && l.Id != id && l.Number >= lesNumber && l.Number < oldnumber);
+                foreach (var les in shiftLessons)
+                {
+                    les.Number++;
+                    db.Update(les);
+                }
+            }
+            else if (lesNumber > oldnumber)
+            {
+                var shiftLessons = db.Lessons.Where(l => l.Course.Id == courseid && l.Id != id && l.Number <= lesNumber && l.Number > oldnumber);
+                foreach (var les in shiftLessons)
+                {
+                    les.Number--;
+                    db.Update(les);
+                }
+            }
+            await db.SaveChangesAsync();
         }
 
         // GET: Lessons/Delete/5
@@ -157,11 +218,24 @@ namespace OnlineSchool2.Controllers
             var lesson = await db.Lessons.FindAsync(id);
             if (lesson != null)
             {
+                await LessonNumbersShiftLeft(lesson.Number, courseid);
                 db.Lessons.Remove(lesson);
             }
-
             await db.SaveChangesAsync();
+
+            
             return RedirectToAction(nameof(Index), new { courseid = courseid });
+        }
+
+        private async Task LessonNumbersShiftLeft(int? oldnumber, int? courseid)
+        {
+            var shiftLessons = db.Lessons.Where(l => l.Course.Id == courseid && l.Number > oldnumber);
+            foreach (var les in shiftLessons)
+            {
+                les.Number--;
+                db.Update(les);
+            }
+            await db.SaveChangesAsync();
         }
 
         private bool LessonExists(int id)

@@ -4,5 +4,6 @@
     {
         public Lesson? Lesson { get; set; }
         public Course? Course { get; set; }
+        public int? TargetNumber { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace OnlineSchool2.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            return View(await db.Courses.ToListAsync());
+            return View((await db.Courses.OrderByDescending(c => c.CreatedDate).ToListAsync()));
         }
 
         // GET: Courses/Details/5

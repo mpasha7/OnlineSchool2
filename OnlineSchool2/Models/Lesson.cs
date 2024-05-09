@@ -6,8 +6,8 @@ namespace OnlineSchool2.Models
     {
         [Key]
         public int Id { get; set; }
-
-        //public int? Number { get; set; }
+        
+        public int? Number { get; set; }
 
         [Required(ErrorMessage = "Введите название урока")]
         public string? Title { get; set; }

@@ -7,6 +7,8 @@ namespace OnlineSchool2.Models
         [Key]
         public int Id { get; set; }
 
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+
         [Required(ErrorMessage = "Введите название курса")]
         public string? Title { get; set; }
 

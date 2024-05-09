@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-12 text-center mb-3">
                     <a asp-controller="Lessons" asp-action="Details" asp-route-id="@item.Id" class="btn">
-                        <h2 class="text-center text-uppercase color@((counter % 2) + 1)">@item.Title</h2>
+                        <h2 class="text-center text-uppercase color@((counter % 2) + 1)">@(item.Number). @item.Title</h2>
                     </a>
                 </div>
             </div>

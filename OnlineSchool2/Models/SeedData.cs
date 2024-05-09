@@ -24,8 +24,9 @@ namespace OnlineSchool2.Models
                         Title = "Гимнастика на стопы", Description = lorem1, PhotoPath = "/photos/Гимнастика на стопы.jpg",
                         Lessons = new List<Lesson> 
                         { 
-                            new Lesson { Title = "Lesson 1.1", Description = lorem1, VideoLink = "Link 1.1" },
-                            new Lesson { Title = "Lesson 1.2", Description = lorem2, VideoLink = "Link 1.2" }
+                            new Lesson { Number = 1, Title = "Lesson 1.1", Description = lorem1, VideoLink = "Link 1.1" },
+                            new Lesson { Number = 2, Title = "Lesson 1.2", Description = lorem2, VideoLink = "Link 1.2" },
+                            new Lesson { Number = 3, Title = "Lesson 1.3", Description = lorem2, VideoLink = "Link 1.3" }
                         }
                     },
                     new Course
@@ -33,8 +34,9 @@ namespace OnlineSchool2.Models
                         Title = "Йога кундалини", Description = lorem2, PhotoPath = "/photos/Йога кундалини.jpg",
                         Lessons = new List<Lesson>
                         {
-                            new Lesson { Title = "Lesson 2.1", Description = lorem1, VideoLink = "Link 2.1" },
-                            new Lesson { Title = "Lesson 2.2", Description = lorem2, VideoLink = "Link 2.2" }
+                            new Lesson { Number = 1, Title = "Lesson 2.1", Description = lorem1, VideoLink = "Link 2.1" },
+                            new Lesson { Number = 2, Title = "Lesson 2.2", Description = lorem2, VideoLink = "Link 2.2" },
+                            new Lesson { Number = 3, Title = "Lesson 2.3", Description = lorem2, VideoLink = "Link 2.3" }
                         }
                     },
                     new Course
@@ -42,8 +44,9 @@ namespace OnlineSchool2.Models
                         Title = "Гимнастика на шею", Description = lorem1, PhotoPath = "/photos/Гимнастика на шею.jpg",
                         Lessons = new List<Lesson>
                         {
-                            new Lesson { Title = "Lesson 2.1", Description = lorem1, VideoLink = "Link 2.1" },
-                            new Lesson { Title = "Lesson 2.2", Description = lorem2, VideoLink = "Link 2.2" }
+                            new Lesson { Number = 1, Title = "Lesson 3.1", Description = lorem1, VideoLink = "Link 3.1" },
+                            new Lesson { Number = 2, Title = "Lesson 3.2", Description = lorem2, VideoLink = "Link 3.2" },
+                            new Lesson { Number = 3, Title = "Lesson 3.3", Description = lorem2, VideoLink = "Link 3.3" }
                         }
                     });
                 db.SaveChanges();
