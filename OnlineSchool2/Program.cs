@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineSchool2.Models;
 
@@ -14,8 +15,17 @@ namespace OnlineSchool2
                 opts.EnableSensitiveDataLogging(true);
             });
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+            builder.Services.AddDbContext<AppIdentityDbContext>(opts =>
+            {
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+            });
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>();
+            builder.Services.Configure<IdentityOptions>(opts =>
+            {
+                opts.User.RequireUniqueEmail = true;
+            });
             var app = builder.Build();
-
 
             
             if (!app.Environment.IsDevelopment())
@@ -27,13 +37,17 @@ namespace OnlineSchool2
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
+            //app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
 
-            SeedData.SeedDatabase(app);
+            SeedData.EnsurePopulated(app);
+            IdentitySeedData.CreateAdminAccount(app.Services, app.Configuration);
             app.Run();
         }
     }

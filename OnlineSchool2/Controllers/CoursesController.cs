@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using OnlineSchool2.Models;
 
 namespace OnlineSchool2.Controllers
 {
+    [Authorize(Roles = "Coach,Student")]    
     public class CoursesController : Controller
     {
         private readonly SchoolContext db;
@@ -20,31 +22,33 @@ namespace OnlineSchool2.Controllers
             this.env = env;
         }
 
-        // GET: Courses
+        // GET: Courses        
         public async Task<IActionResult> Index()
         {
+            ViewBag.IsCoach = User.IsInRole("Coach");
             return View((await db.Courses.OrderByDescending(c => c.CreatedDate).ToListAsync()));
         }
 
-        // GET: Courses/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Courses/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var course = await db.Courses
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (course == null)
-            {
-                return NotFound();
-            }
+        //    var course = await db.Courses
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (course == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(course);
-        }
+        //    return View(course);
+        //}
 
         // GET: Courses/Create
+        [Authorize(Roles = "Coach")]
         public IActionResult Create()
         {
             return View();
@@ -55,6 +59,7 @@ namespace OnlineSchool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,PhotoPath")] Course course)
         {
             if (ModelState.IsValid)
@@ -78,6 +83,7 @@ namespace OnlineSchool2.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -99,6 +105,7 @@ namespace OnlineSchool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Edit(string path, int id, [Bind("Id,Title,Description,PhotoPath")] Course course)
         {
             if (id != course.Id)
@@ -146,6 +153,7 @@ namespace OnlineSchool2.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -166,6 +174,7 @@ namespace OnlineSchool2.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             if (id is null || db.Courses == null)

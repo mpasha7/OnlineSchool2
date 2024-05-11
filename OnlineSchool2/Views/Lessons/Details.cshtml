@@ -9,8 +9,7 @@
         <div class="col-12">
             <h1 class="text-center text-uppercase color1">
                 @Model?.Course?.Title
-            </h1>
-            
+            </h1>            
         </div>
     </div>
 </section>
@@ -44,7 +43,10 @@
             <div class="col-12">
                 <div class="container-fluid text-center mt-4 mb-4">
                     <div class="form-group">
-                        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn_itd text-uppercase text-center mx-3">Редактировать</a>
+                        @if (ViewBag.IsCoach)
+                        {
+                            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn_itd text-uppercase text-center mx-3">Редактировать</a>
+                        }
                         <a asp-action="Index" asp-route-courseid="@Model.Course.Id" class="btn btn-sm btn_itd_outline text-uppercase text-center mx-3">К списку уроков</a>
                     </div>
                 </div>

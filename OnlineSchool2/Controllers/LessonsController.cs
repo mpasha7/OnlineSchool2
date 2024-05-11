@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using OnlineSchool2.Models;
 
 namespace OnlineSchool2.Controllers
 {
+    [Authorize(Roles = "Coach,Student")]    
     public class LessonsController : Controller
     {
         private readonly SchoolContext db;
@@ -27,6 +29,7 @@ namespace OnlineSchool2.Controllers
                 Lessons = await db.Lessons.Where(l => l.Course.Id == courseid).OrderBy(l => l.Number).ToListAsync(),
                 Course = await db.Courses.FirstOrDefaultAsync(c => c.Id == courseid)
             };
+            ViewBag.IsCoach = User.IsInRole("Coach");
             return View(model);
         }
 
@@ -44,11 +47,12 @@ namespace OnlineSchool2.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.IsCoach = User.IsInRole("Coach");
             return View(lesson);
         }
 
         // GET: Lessons/Create
+        [Authorize(Roles = "Coach")]
         public IActionResult Create(int? courseid)
         {
             int? maxNumber = (db.Lessons.Where(l => l.Course.Id == courseid).Max(l => l.Number) ?? 0) + 1;
@@ -65,6 +69,7 @@ namespace OnlineSchool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Create(int courseid, int maxnumber, [Bind("Id,Number,Title,Description,VideoLink")] Lesson lesson)
         {
             if (ModelState.IsValid)
@@ -100,6 +105,7 @@ namespace OnlineSchool2.Controllers
             await db.SaveChangesAsync();
         }
 
+        [Authorize(Roles = "Coach")]
         // GET: Lessons/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -125,6 +131,7 @@ namespace OnlineSchool2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Edit(int? courseid, int oldnumber, int id, [Bind("Id,Number,Title,Description,VideoLink")] Lesson lesson)
         {
             if (id != lesson.Id)
@@ -193,6 +200,7 @@ namespace OnlineSchool2.Controllers
         }
 
         // GET: Lessons/Delete/5
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -213,6 +221,7 @@ namespace OnlineSchool2.Controllers
         // POST: Lessons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coach")]
         public async Task<IActionResult> DeleteConfirmed(int? courseid, int id)
         {
             var lesson = await db.Lessons.FindAsync(id);

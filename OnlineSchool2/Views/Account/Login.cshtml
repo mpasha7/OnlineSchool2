@@ -1,0 +1,29 @@
+﻿@model LoginModel
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<div class="bg-dark text-white p-2">
+    <span navbar-brand ml-2>SPORTS STORE</span>
+</div>
+<div class="m-1 p-1">
+    <form asp-action="Login" asp-controller="Account" method="POST">
+        <div class="text-danger" asp-validation-summary="All"></div>
+
+        <input type="hidden" asp-for="ReturnUrl" />
+
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <div asp-validation-for="Name" class="text-danger"></div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <div asp-validation-for="Password" class="text-danger"></div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Войти</button>
+    </form>
+</div>

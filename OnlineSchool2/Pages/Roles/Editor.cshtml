@@ -1,0 +1,75 @@
+﻿@page "{id}"
+@model OnlineSchool2.Pages.Roles.EditorModel
+
+<h5 class="bg-primary text-white text-center p-2">Редактирование роли: @Model.Role.Name</h5>
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <input type="hidden" name="rolename" value="@Model.Role.Name" />    
+
+    <h5 class="bg-secondary text-white p-2">Представители</h5>
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Пользователь</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if ((await Model.Members()).Count() == 0)
+            {
+                <tr>
+                    <td colspan="3" class="text-center">Нет представителей</td>
+                </tr>
+            }
+            else
+            {
+                foreach (IdentityUser user in await Model.Members())
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <button type="submit" asp-route-userid="@user.Id" class="btn btn-sm btn-primary">Удалить</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <h5 class="bg-secondary text-white p-2">НЕ представители</h5>
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Пользователь</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if ((await Model.NonMembers()).Count() == 0)
+            {
+                <tr>
+                    <td colspan="3" class="text-center">Нет НЕ представителей</td>
+                </tr>
+            }
+            else
+            {
+                foreach (IdentityUser user in await Model.NonMembers())
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <button type="submit" asp-route-userid="@user.Id" class="btn btn-sm btn-primary">Добавить</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</form>
+
+<a class="btn btn-secondary" asp-page="List">Назад</a>

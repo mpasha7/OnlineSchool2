@@ -1,0 +1,14 @@
+﻿@page
+@model OnlineSchool2.Pages.Roles.CreateModel
+
+<h5 class="bg-primary text-white text-center p-2">Создание роли</h5>
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label>Название роли</label>
+        <input name="Name" class="form-control" value="@Model.Name" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a class="btn btn-secondary" asp-page="List">Назад</a>
+</form>
