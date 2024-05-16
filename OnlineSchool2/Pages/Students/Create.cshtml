@@ -1,0 +1,58 @@
+﻿@page
+@model OnlineSchool2.Pages.Students.CreateModel
+@{
+    ViewData["Title"] = "Создание нового ученика";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 py-2">
+            <h1 class="text-center text-uppercase color1 pb-3">
+                @ViewData["Title"]
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-9 container-fluid">
+            <form asp-page="/Students/Create" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label"><h5 class="color2">Имя ученика</h5></label>
+                    <input asp-for="UserName" class="form-control" value="@Model.UserName" placeholder="Имя..." />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label mt-3"><h5 class="color2">Email</h5></label>
+                    <input type="email" asp-for="Email" class="form-control" value="@Model.Email" placeholder="Email..." />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label mt-3"><h5 class="color2">Пароль</h5></label>
+                    <input type="password" asp-for="Password" class="form-control" value="@Model.Password" placeholder="Пароль..." />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CourseId" class="control-label mt-3"><h5 class="color2">Добавить курс?</h5></label>
+                    <select asp-for="CourseId" asp-items="@(new SelectList(Model.Courses, "Id", "Title"))" class="form-control">
+                        <option value="" disabled selected>Без курса</option>
+                    </select>
+                </div>
+
+                <div class="container-fluid text-center mt-4 mb-5">
+                    <div class="form-group">
+                        <input type="submit" value="Создать" class="btn btn_itd text-uppercase text-center mx-3" />
+                        <a asp-page="List" class="btn btn-sm btn_itd_outline text-uppercase text-center mx-3">К списку</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

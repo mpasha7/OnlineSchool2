@@ -129,11 +129,16 @@ input, textarea {
         height: 100%;
     }
 
+.cell_justify {
+    vertical-align:middle;
+}
 
 
 
 /*Addition*/
 html {
+    position: relative;
+    height: 100%;
     font-size: 14px;
 }
 
@@ -147,11 +152,10 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+body {
+    height: 77%;
 }
 
-body {
-  margin-bottom: 60px;
+main {
+    min-height: 100%;
 }

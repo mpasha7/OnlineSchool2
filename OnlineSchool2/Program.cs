@@ -24,6 +24,8 @@ namespace OnlineSchool2
             builder.Services.Configure<IdentityOptions>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
+                opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+" 
+                                                    + "àáâãäå¸æçèéêëìíîïğñòóôõö÷øùüûúışÿÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÜÛÚİŞß";
             });
             var app = builder.Build();
 
@@ -46,8 +48,8 @@ namespace OnlineSchool2
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            SeedData.EnsurePopulated(app);
             IdentitySeedData.CreateAdminAccount(app.Services, app.Configuration);
+            SeedData.EnsurePopulated(app);            
             app.Run();
         }
     }

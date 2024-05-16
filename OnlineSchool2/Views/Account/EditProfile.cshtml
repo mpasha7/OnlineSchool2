@@ -1,0 +1,72 @@
+﻿@model UserModel
+@{
+    ViewData["Title"] = "Редактирование профиля";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 my-3">
+            <h1 class="text-center text-uppercase color1 pb-3">
+                @ViewData["Title"]
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-9 container-fluid">
+            <form asp-action="EditProfile" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label class="control-label"><h5 class="color2">ID</h5></label>
+                    <input asp-for="Id" class="form-control" value="@Model.Id" disabled />
+                    <input asp-for="Id" type="hidden" value="@Model.Id" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label mt-3"><h5 class="color2">Имя пользователя</h5></label>
+                    <input asp-for="UserName" class="form-control" value="@Model.UserName" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label mt-3"><h5 class="color2">Email</h5></label>
+                    <input type="email" asp-for="Email" class="form-control" value="@Model.Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="OldPassword" class="control-label mt-3"><h5 class="color2">Пароль</h5></label>
+                    <input type="password" asp-for="OldPassword" class="form-control" value="@Model.OldPassword" />
+                    <span asp-validation-for="OldPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NewPassword" class="control-label mt-3"><h5 class="color2">Новый пароль (при желании)</h5></label>
+                    <input type="password" asp-for="NewPassword" class="form-control" value="@Model.NewPassword" />
+                    <span asp-validation-for="NewPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="control-label mt-3"><h5 class="color2">Подтверждение нового пароля (при желании)</h5></label>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" value="@Model.ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="container-fluid text-center mt-4 mb-5">
+                    <div class="form-group">
+                        <input type="submit" value="Сохранить" class="btn btn_itd text-uppercase text-center mx-3" />
+                        <a asp-action="Profile" class="btn btn-sm btn_itd_outline text-uppercase text-center mx-3">Назад</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineSchool2.Models
 {
@@ -9,6 +10,11 @@ namespace OnlineSchool2.Models
 
         public static void EnsurePopulated(IApplicationBuilder app)
         {
+            EnsurePopulatedAsync(app).Wait();
+        }
+
+        public static async Task EnsurePopulatedAsync(IApplicationBuilder app)
+        {
             SchoolContext db = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<SchoolContext>();
 
             if (db.Database.GetPendingMigrations().Any())
@@ -18,35 +24,56 @@ namespace OnlineSchool2.Models
 
             if (!db.Courses.Any())
             {
+                UserManager<IdentityUser> userManager = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                string? coachId = (await userManager.FindByNameAsync("Irina"))?.Id;
+                string? firstStudentId = (await userManager.FindByNameAsync("Alex"))?.Id;
+                string? secondStudentId = (await userManager.FindByNameAsync("Tom"))?.Id;
+
                 db.Courses.AddRange(
                     new Course
                     {
                         Title = "Гимнастика на стопы", Description = lorem1, PhotoPath = "/photos/Гимнастика на стопы.jpg",
-                        Lessons = new List<Lesson> 
-                        { 
+                        CoachGuid = coachId,
+                        Lessons = new List<Lesson>
+                        {
                             new Lesson { Number = 1, Title = "Lesson 1.1", Description = lorem1, VideoLink = "Link 1.1" },
                             new Lesson { Number = 2, Title = "Lesson 1.2", Description = lorem2, VideoLink = "Link 1.2" },
                             new Lesson { Number = 3, Title = "Lesson 1.3", Description = lorem2, VideoLink = "Link 1.3" }
+                        },
+                        Students = new List<StudentOfCourse>
+                        {
+                            new StudentOfCourse { StudentGuid = firstStudentId },
+                            new StudentOfCourse { StudentGuid = secondStudentId }
                         }
                     },
                     new Course
                     {
                         Title = "Йога кундалини", Description = lorem2, PhotoPath = "/photos/Йога кундалини.jpg",
+                        CoachGuid = coachId,
                         Lessons = new List<Lesson>
                         {
                             new Lesson { Number = 1, Title = "Lesson 2.1", Description = lorem1, VideoLink = "Link 2.1" },
                             new Lesson { Number = 2, Title = "Lesson 2.2", Description = lorem2, VideoLink = "Link 2.2" },
                             new Lesson { Number = 3, Title = "Lesson 2.3", Description = lorem2, VideoLink = "Link 2.3" }
+                        },
+                        Students = new List<StudentOfCourse>
+                        {
+                            new StudentOfCourse { StudentGuid = firstStudentId }
                         }
                     },
                     new Course
                     {
                         Title = "Гимнастика на шею", Description = lorem1, PhotoPath = "/photos/Гимнастика на шею.jpg",
+                        CoachGuid = coachId,
                         Lessons = new List<Lesson>
                         {
                             new Lesson { Number = 1, Title = "Lesson 3.1", Description = lorem1, VideoLink = "Link 3.1" },
                             new Lesson { Number = 2, Title = "Lesson 3.2", Description = lorem2, VideoLink = "Link 3.2" },
                             new Lesson { Number = 3, Title = "Lesson 3.3", Description = lorem2, VideoLink = "Link 3.3" }
+                        },
+                        Students = new List<StudentOfCourse>
+                        {
+                            new StudentOfCourse { StudentGuid = firstStudentId }
                         }
                     });
                 db.SaveChanges();

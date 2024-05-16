@@ -1,0 +1,92 @@
+﻿@page "{id}"
+@model OnlineSchool2.Pages.Students.EditorModel
+@{
+    ViewData["Title"] = Model?.Student?.UserName;
+}
+
+
+<div class="row">
+    <div class="col-12 py-2">
+        <h1 class="text-center text-uppercase color2 pb-2">
+            Курсы ученика: @ViewData["Title"]
+        </h1>
+    </div>
+</div>
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <input type="hidden" name="studentid" value="@Model.Student.Id" />
+
+    <div class="container">
+        <div class="col-10 container-fluid">
+            <div class="back0 py-2">
+                <h2 class="text-center color1 pb-3">
+                    Приобретенные курсы
+                </h2>
+            </div>
+
+            <table class="table table-sm table-striped table-bordered">
+                <tbody>
+                    @if (Model.Purchased().Count() == 0)
+                    {
+                        <tr class="cell_justify">
+                            <td colspan="3" class="text-center color2"><h5 class="m-2">Нет приобретенных курсов</h5></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (Course course in Model.Purchased())
+                        {
+                            <tr class="cell_justify">
+                                <td class="color2"><h5 class="ps-3">@course.Title</h5></td>
+                                <td class="col-3 text-center">
+                                    <button type="submit" asp-route-courseid="@course.Id" class="btn btn_itd text-uppercase text-center">Удалить</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container mt-4">        
+        <div class="col-10 container-fluid">
+            <div class="back0 py-2">
+                <h2 class="text-center color1 pb-3">
+                    НЕ приобретенные курсы
+                </h2>
+            </div>
+
+            <table class="table table-sm table-striped table-bordered">
+                <tbody>
+                    @if (Model.NonPurchased().Count() == 0)
+                    {
+                        <tr class="cell_justify">
+                            <td colspan="3" class="text-center color2"><h5 class="m-2">Нет НЕ приобретенных курсов</h5></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (Course course in Model.NonPurchased())
+                        {
+                            <tr class="cell_justify">
+                                <td class="color2"><h5 class="ps-3">@course.Title</h5></td>
+                                <td class="col-3 text-center">
+                                    <button type="submit" asp-route-courseid="@course.Id" class="btn btn_itd text-uppercase text-center">Добавить</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+<div class="container-fluid text-center mt-4 mb-5">
+    <div class="form-group">
+        <a asp-page="List" class="btn btn-sm btn_itd_outline text-uppercase text-center mx-3">Назад</a>
+    </div>
+</div>

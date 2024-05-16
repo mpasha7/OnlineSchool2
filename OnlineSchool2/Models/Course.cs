@@ -17,11 +17,16 @@ namespace OnlineSchool2.Models
 
         public string? PhotoPath { get; set; }
 
+        public string? CoachGuid { get; set; }////////////////
+
         public virtual IEnumerable<Lesson> Lessons { get; set; }
+
+        public virtual IEnumerable<StudentOfCourse> Students { get; set; }////////////////
 
         public Course()
         {
             Lessons = new List<Lesson>();
+            Students = new List<StudentOfCourse>();////////////////
         }
     }
 }

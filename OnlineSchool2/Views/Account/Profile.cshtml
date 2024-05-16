@@ -1,0 +1,27 @@
+﻿@model IdentityUser
+@{
+    ViewData["Title"] = Model.UserName;
+}
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center text-uppercase color2 my-3">
+                    Профиль пользователя
+                </h1>
+                <h2 class="text-center color1 pb-1">
+                    @ViewData["Title"]
+                </h2>
+                <h2 class="text-center color1 pb-1">
+                    @Model.Email
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container-fluid text-center mt-4 mb-4">
+                <a asp-action="EditProfile" class="btn btn_itd text-uppercase text-center mx-3">Редактировать</a>
+            </div>
+        </div>
+    </div>
+</section>

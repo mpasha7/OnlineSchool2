@@ -1,0 +1,58 @@
+﻿@page
+@model OnlineSchool2.Pages.Students.ListModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 my-2">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Search"><h5 class="color1">Поиск по Email среди всех учеников:</h5></label>
+                    <input type="search" asp-for="Search" class="form-control" placeholder="Поиск..." />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 my-2">
+            <h2 class="color1">Ваши ученики</h2>
+
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th class="col-4">ID</th>
+                        <th>Имя</th>
+                        <th>Email</th>
+                        <th class="col-3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Users.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">Нет студентов</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (IdentityUser user in Model.Users)
+                        {
+                            <tr class="cell_justify">
+                                <td>@user.Id</td>
+                                <td><h6 class="color2">@user.UserName</h6></td>
+                                <td><h6 class="color2">@user.Email</h6></td>
+                                <td class="text-center">
+                                    <a class="btn btn-sm btn_itd_outline text-uppercase text-center" asp-page="Editor" asp-route-id="@user.Id" asp-route-mode="edit">Редактировать</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>            
+        </div>
+
+        <div class="col-12 text-center mb-5">
+            <a class="btn btn_itd text-uppercase text-center" asp-page="Create">Создать</a>
+        </div>
+    </div>
+</div>

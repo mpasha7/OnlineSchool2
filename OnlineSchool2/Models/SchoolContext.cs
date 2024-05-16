@@ -6,6 +6,7 @@ namespace OnlineSchool2.Models
     {
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<StudentOfCourse> Students { get; set; }
 
         public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
         {

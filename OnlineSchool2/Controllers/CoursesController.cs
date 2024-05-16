@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,18 +16,32 @@ namespace OnlineSchool2.Controllers
     {
         private readonly SchoolContext db;
         private IWebHostEnvironment env;
+        private UserManager<IdentityUser> userManager;
 
-        public CoursesController(SchoolContext context, IWebHostEnvironment env)
+        public CoursesController(SchoolContext context, IWebHostEnvironment env, UserManager<IdentityUser> usrMgr)
         {
             this.db = context;
             this.env = env;
+            this.userManager = usrMgr;
         }
 
         // GET: Courses        
         public async Task<IActionResult> Index()
         {
             ViewBag.IsCoach = User.IsInRole("Coach");
-            return View((await db.Courses.OrderByDescending(c => c.CreatedDate).ToListAsync()));
+            string? userId = (await userManager.FindByNameAsync(User.Identity.Name))?.Id;
+            List<Course> courses;
+            if (ViewBag.IsCoach)
+            {
+                courses = await db.Courses.Where(c => c.CoachGuid == userId)
+                    .OrderByDescending(c => c.CreatedDate).ToListAsync();
+            }
+            else
+            {
+                courses = await db.Courses.Include(c => c.Students).Where(c => c.Students.Where(s => s.StudentGuid == userId).Any())
+                    .OrderByDescending(c => c.CreatedDate).ToListAsync();
+            }
+            return View(courses);
         }
 
         //// GET: Courses/Details/5
@@ -73,8 +88,9 @@ namespace OnlineSchool2.Controllers
                     {
                         await file.CopyToAsync(fileStream);
                     }
-                    course.PhotoPath = path;                    
+                    course.PhotoPath = path;
                 }
+                course.CoachGuid = (await userManager.FindByNameAsync(User.Identity.Name))?.Id;
                 await db.Courses.AddAsync(course);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -128,8 +144,9 @@ namespace OnlineSchool2.Controllers
                             await file.CopyToAsync(fileStream);
                         }
                     }
-                }
+                }                
                 course.PhotoPath = path;
+                course.CoachGuid = (await userManager.FindByNameAsync(User.Identity.Name))?.Id;
 
                 try
                 {

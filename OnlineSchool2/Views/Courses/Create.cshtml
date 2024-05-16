@@ -5,7 +5,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-12 pt-2 pb-2">
+        <div class="col-12 py-2">
             <h1 class="text-center text-uppercase color1 pb-3">
                 @ViewData["Title"]
             </h1>
@@ -44,13 +44,6 @@
             </form>
         </div>
     </div>
-
-@*     <div class="row">
-        <div class="col-12 text-center mt-3">
-            <a asp-action="Index" class="btn btn-sm btn_itd_outline text-uppercase text-center">К списку курсов</a>
-        </div>
-    </div> *@
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

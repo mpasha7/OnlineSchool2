@@ -1,14 +1,24 @@
 ﻿@page
 @model OnlineSchool2.Pages.Roles.CreateModel
+@{
+    ViewData["Title"] = "Создание роли";
+}
 
-<h5 class="bg-primary text-white text-center p-2">Создание роли</h5>
-<form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label>Название роли</label>
-        <input name="Name" class="form-control" value="@Model.Name" />
-    </div>
+<div class="container">
+    <h2 class="bg-primary text-center text-white p-1 mb-2">@ViewData["Title"]</h2>
 
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-    <a class="btn btn-secondary" asp-page="List">Назад</a>
-</form>
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label>Название роли</label>
+            <input name="Name" class="form-control" value="@Model.Name" />
+        </div>
+
+        <div class="container-fluid text-center mt-4 mb-5">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a class="btn btn-secondary" asp-page="List">Назад</a>
+            </div>
+        </div>
+    </form>
+</div>

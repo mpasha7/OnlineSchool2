@@ -23,7 +23,10 @@ namespace OnlineSchool2.Pages.Users
         public string Email { get; set; }
 
         [BindProperty]
-        public string Password { get; set; }
+        public string? Password { get; set; }
+        [BindProperty]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        public string? ConfirmPassword { get; set; }
 
         public EditorModel(UserManager<IdentityUser> usrMgr)
         {
@@ -33,9 +36,9 @@ namespace OnlineSchool2.Pages.Users
         public async Task OnGetAsync(string id)
         {
             IdentityUser user = await userManager.FindByIdAsync(id);
-            this.Id = user.Id;
-            this.UserName = user.UserName;
-            this.Email = user.Email;
+            Id = user.Id;
+            UserName = user.UserName;
+            Email = user.Email;
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -43,8 +46,8 @@ namespace OnlineSchool2.Pages.Users
             if (ModelState.IsValid)
             {
                 IdentityUser user = await userManager.FindByIdAsync(Id);
-                this.UserName = user.UserName;
-                this.Email = user.Email;
+                user.UserName = UserName;
+                user.Email = Email;
                 IdentityResult result = await userManager.UpdateAsync(user);
                 if (result.Succeeded && !string.IsNullOrEmpty(Password))
                 {

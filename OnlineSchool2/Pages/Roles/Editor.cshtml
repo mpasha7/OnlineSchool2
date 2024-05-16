@@ -1,75 +1,115 @@
 ﻿@page "{id}"
 @model OnlineSchool2.Pages.Roles.EditorModel
+@{
+    ViewData["Title"] = Model.Role.Name;
+}
 
-<h5 class="bg-primary text-white text-center p-2">Редактирование роли: @Model.Role.Name</h5>
-<form method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+<div class="container">
+    <h2 class="bg-primary text-center text-white p-1 mb-2">Редактирование роли: @ViewData["Title"]</h2>
 
-    <input type="hidden" name="rolename" value="@Model.Role.Name" />    
+@*     <div class="mb-3">
+        <form method="post" asp-page-handler="Search">
+            <div class="form-group">
+                <label asp-for="SearchString">Поиск по Email:</label>
+                <input type="search" asp-for="SearchString" class="form-control" placeholder="Поиск..." />
+            </div>
+        </form>
+    </div> *@
 
-    <h5 class="bg-secondary text-white p-2">Представители</h5>
-    <table class="table table-sm table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>Пользователь</th>
-                <th>Email</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if ((await Model.Members()).Count() == 0)
-            {
-                <tr>
-                    <td colspan="3" class="text-center">Нет представителей</td>
-                </tr>
-            }
-            else
-            {
-                foreach (IdentityUser user in await Model.Members())
-                {
-                    <tr>
-                        <td>@user.UserName</td>
-                        <td>@user.Email</td>
-                        <td>
-                            <button type="submit" asp-route-userid="@user.Id" class="btn btn-sm btn-primary">Удалить</button>
-                        </td>
+    <form method="post" asp-page-handler="Choice">
+        <div class="form-group mb-3">
+            <label asp-for="SearchString">Поиск по Email:</label>
+            <input type="search" asp-for="SearchString" class="form-control" placeholder="Поиск..." />
+        </div>
+
+        <div class="form-group">
+            <select asp-for="Choice" asp-items="@(new SelectList(Model.MembersOrNot))" class="form-select" onchange="this.form.submit()">
+            </select>
+        </div>
+    </form>
+
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <input type="hidden" name="rolename" value="@Model.Role.Name" />
+
+        @if(Model.Choice == Model.MembersOrNot[0])
+        {
+            <h5 class="bg-secondary text-center text-white py-2">@Model.MembersOrNot[0]</h5>
+            <table class="table table-sm table-striped table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th class="col-4">Пользователь</th>
+                        <th>Email</th>
+                        <th class="col-2"></th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-
-    <h5 class="bg-secondary text-white p-2">НЕ представители</h5>
-    <table class="table table-sm table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>Пользователь</th>
-                <th>Email</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if ((await Model.NonMembers()).Count() == 0)
-            {
-                <tr>
-                    <td colspan="3" class="text-center">Нет НЕ представителей</td>
-                </tr>
-            }
-            else
-            {
-                foreach (IdentityUser user in await Model.NonMembers())
-                {
-                    <tr>
-                        <td>@user.UserName</td>
-                        <td>@user.Email</td>
-                        <td>
-                            <button type="submit" asp-route-userid="@user.Id" class="btn btn-sm btn-primary">Добавить</button>
-                        </td>
+                </thead>
+                <tbody>
+                    @if ((await Model.Members()).Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center">Нет представителей</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (IdentityUser user in (await Model.Members()).ToList()
+                            .Where(u => string.IsNullOrWhiteSpace(Model.SearchString) 
+                                        || (u.Email != null && u.Email.ToLower().Contains(Model.SearchString.ToLower()))))
+                        {
+                            <tr class="cell_justify">
+                                <td>@user.UserName</td>
+                                <td>@user.Email</td>
+                                <td class="text-center">
+                                    <button type="submit" asp-route-userid="@user.Id" class="btn btn-sm btn-primary">Удалить</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h5 class="bg-secondary text-center text-white py-2">@Model.MembersOrNot[1]</h5>
+            <table class="table table-sm table-striped table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th class="col-4">Пользователь</th>
+                        <th>Email</th>
+                        <th class="col-2"></th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-</form>
+                </thead>
+                <tbody>
+                    @if ((await Model.NonMembers()).Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center">Нет НЕ представителей</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (IdentityUser user in (await Model.NonMembers()).ToList()
+                            .Where(u => string.IsNullOrWhiteSpace(Model.SearchString) 
+                                        || (u.Email != null && u.Email.ToLower().Contains(Model.SearchString.ToLower()))))
+                        {
+                            <tr class="cell_justify">
+                                <td>@user.UserName</td>
+                                <td>@user.Email</td>
+                                <td class="text-center">
+                                    <button type="submit" asp-route-userid="@user.Id" class="btn btn-sm btn-primary">Добавить</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }        
+    </form>
 
-<a class="btn btn-secondary" asp-page="List">Назад</a>
+    <div class="text-center mt-4 mb-5">
+        <div class="form-group">
+            <a class="btn btn-secondary" asp-page="List">Назад</a>
+        </div>
+    </div>    
+</div>
