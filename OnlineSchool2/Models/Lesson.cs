@@ -19,8 +19,8 @@ namespace OnlineSchool2.Models
 
         public virtual Course? Course { get; set; }
 
-        public Lesson() 
-        { 
+        public Lesson()
+        {
 
         }
     }

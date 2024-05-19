@@ -1,8 +1,29 @@
-﻿@{
+﻿@model IEnumerable<OnlineSchool2.Models.Course>
+@{
     ViewData["Title"] = "Главная";
+    int counter = 0;
 }
 
-<div class="text-center">
-    <h1 class="display-1 color1 text-uppercase">Онлайн-школа</h1>
-    <h2 class="display-3 color1 text-uppercase">гимнастики</h2>
+<section class="for_pattern pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="display-1 title_text color2 text-uppercase">Онлайн-школа</h1>
+                <h2 class="display-3 title_text color2 text-uppercase">гимнастики</h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mb-5">
+    <div class="row">
+        @foreach(var item in Model)
+        {
+            <div class="col-md-6 col-sm-12 text-center text-uppercase pt-5">
+                <h3 class="color1">@item.Title</h3>
+                <img src="@Url.Content(item.PhotoPath)" alt="Фото" class="img-fluid itd_home_img" />
+            </div>
+            counter++;
+        }
+    </div>
 </div>

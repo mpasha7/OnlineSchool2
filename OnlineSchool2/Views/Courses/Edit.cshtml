@@ -36,9 +36,21 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="PhotoPath" class="control-label mt-3"><h5 class="color2">Фото курса</h5></label>
+                    <label asp-for="PhotoPath" class="control-label mt-3"><h5 class="color2">Изменить фото курса?</h5></label>
                     <input type="file" asp-for="PhotoPath" class="form-control" />
                     <span asp-validation-for="PhotoPath" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="BeginQuestionnaire" class="control-label mt-3"><h5 class="color2">Изменить анкету в начале курса?</h5></label>
+                    <input asp-for="BeginQuestionnaire" class="form-control" />
+                    <span asp-validation-for="BeginQuestionnaire" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="EndQuestionnaire" class="control-label mt-3"><h5 class="color2">Изменить анкету в конце курса?</h5></label>
+                    <input asp-for="EndQuestionnaire" class="form-control" />
+                    <span asp-validation-for="EndQuestionnaire" class="text-danger"></span>
                 </div>
 
                 <div class="container-fluid text-center mt-4 mb-5">

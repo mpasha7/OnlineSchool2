@@ -7,15 +7,17 @@ namespace OnlineSchool2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private SchoolContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SchoolContext ctx)
         {
             _logger = logger;
+            db = ctx;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(db.Courses.OrderByDescending(c => c.CreatedDate).Take(8).ToList());
         }
 
         public IActionResult Privacy()

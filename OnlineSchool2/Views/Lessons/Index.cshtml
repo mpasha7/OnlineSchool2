@@ -1,5 +1,4 @@
 ﻿@model OnlineSchool2.Models.LessonsListViewModel
-
 @{
     ViewData["Title"] = Model.Course?.Title;
     string bg = "";
@@ -24,6 +23,18 @@
         </div>
     </div>
 </section>
+
+@if(Model?.Course?.BeginQuestionnaire is not null)
+{
+    <section class="back@(counter % 2)">
+        <div class="col-12 text-center">
+            <a asp-controller="Courses" asp-action="GetQuestionnaire" asp-route-courseid="@Model.Course.Id" asp-route-isbegin="true" class="btn">
+                <h2 class="text-center text-uppercase color@((counter % 2) + 1)">Заполните анкету перед началом курса</h2>
+            </a>
+        </div>
+    </section>
+    counter++;
+}
 
 @foreach (var item in Model.Lessons)
 {
@@ -53,6 +64,18 @@
         </div>
     </section>
     counter++;
+}
+
+@if (Model?.Course?.EndQuestionnaire is not null)
+{
+    <section class="back@(counter % 2)">
+        <div class="col-12 text-center">
+            <a asp-controller="Courses" asp-action="GetQuestionnaire" asp-route-courseid="@Model.Course.Id" asp-route-isbegin="false" class="btn">
+                <h2 class="text-center text-uppercase color@((counter % 2) + 1)">Заполните анкету после завершения курса</h2>
+            </a>
+        </div>
+    </section>
+@*     counter++; *@
 }
 
 <section>

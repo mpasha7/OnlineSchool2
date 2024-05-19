@@ -67,12 +67,20 @@ section {
         border: 3px solid var(--color1);
     }
 
+/*переделать*/
 .itd_img {
     width: 500px;
 }
-
 .itd_big_img {
     width: 600px;
+}
+.itd_home_img {
+    width: 500px;
+    height: 300px;
+}
+
+.title_text {
+    font-weight: 400;
 }
 
 .for_pattern {

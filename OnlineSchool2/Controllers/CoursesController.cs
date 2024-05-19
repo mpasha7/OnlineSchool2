@@ -44,24 +44,6 @@ namespace OnlineSchool2.Controllers
             return View(courses);
         }
 
-        //// GET: Courses/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var course = await db.Courses
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (course == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(course);
-        //}
-
         // GET: Courses/Create
         [Authorize(Roles = "Coach")]
         public IActionResult Create()
@@ -75,7 +57,7 @@ namespace OnlineSchool2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,PhotoPath")] Course course)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,PhotoPath,BeginQuestionnaire,EndQuestionnaire")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -122,7 +104,7 @@ namespace OnlineSchool2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> Edit(string path, int id, [Bind("Id,Title,Description,PhotoPath")] Course course)
+        public async Task<IActionResult> Edit(string path, int id, [Bind("Id,Title,Description,PhotoPath,BeginQuestionnaire,EndQuestionnaire")] Course course)
         {
             if (id != course.Id)
             {
@@ -166,6 +148,17 @@ namespace OnlineSchool2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            return View(course);
+        }
+
+        public async Task<IActionResult> GetQuestionnaire(int courseid, bool isbegin)
+        {
+            Course? course = await db.Courses.FirstOrDefaultAsync(c => c.Id == courseid);
+            if (course is null)
+            {
+                return NotFound();
+            }
+            ViewBag.IsBegin = isbegin;
             return View(course);
         }
 

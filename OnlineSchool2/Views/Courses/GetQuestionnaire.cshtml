@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Html
+@model OnlineSchool2.Models.Course
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center text-uppercase color1 pb-2">
+                Анкета перед началом курса:
+            </h1>
+            <h2 class="text-center text-uppercase color2 pb-2">
+                @ViewData["Title"]
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            @if (ViewBag.IsBegin)
+            {
+                @* Опасно *@
+                @(new HtmlString(Model.BeginQuestionnaire))
+            }
+            else
+            {
+                @(new HtmlString(Model.EndQuestionnaire))
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="container-fluid text-center mt-4 mb-4">
+                <a asp-controller="Lessons" asp-action="Index" asp-route-courseid="@Model.Id" class="btn btn-sm btn_itd_outline text-uppercase text-center mx-3">К списку уроков</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<OnlineSchool2.Models.Course>
-
 @{
     ViewData["Title"] = "Все курсы";
-    string bg = "";
     int counter = 0;
 }
 
@@ -18,13 +16,13 @@
 
 @foreach (var item in Model)
 {    
-    <section class="course_block back@(counter % 2)">
+    <section class="back@(counter % 2)">
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center pt-2 mb-3">
                     <a asp-controller="Lessons" asp-action="Index" asp-route-courseid="@item.Id" class="btn">
                         <h2 class="text-center text-uppercase color@((counter % 2) + 1)">@item.Title</h2>
-                    </a>                    
+                    </a>
                 </div>
             </div>
             <div class="row">

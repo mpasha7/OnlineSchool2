@@ -35,6 +35,18 @@
                     <span asp-validation-for="PhotoPath" class="text-danger"></span>
                 </div>
 
+                <div class="form-group">
+                    <label asp-for="BeginQuestionnaire" class="control-label mt-3"><h5 class="color2">Добавить анкету в начале курса?</h5></label>
+                    <input asp-for="BeginQuestionnaire" class="form-control" placeholder="Код для вставки..." />
+                    <span asp-validation-for="BeginQuestionnaire" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="EndQuestionnaire" class="control-label mt-3"><h5 class="color2">Добавить анкету в конце курса?</h5></label>
+                    <input asp-for="EndQuestionnaire" class="form-control" placeholder="Код для вставки..." />
+                    <span asp-validation-for="EndQuestionnaire" class="text-danger"></span>
+                </div>
+
                 <div class="container-fluid text-center mt-4 mb-5">
                     <div class="form-group">
                         <input type="submit" value="Создать" class="btn btn_itd text-uppercase text-center mx-3" />
