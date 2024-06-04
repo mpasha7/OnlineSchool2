@@ -30,7 +30,7 @@ namespace OnlineSchool2.Pages.HomeList
         public async Task OnGet(int id)
         {
             Course = await db.Courses.FindAsync(id);
-            Courses = db.Courses.Where(c => c.Id != id);
+            Courses = db.Courses.Where(c => c.Id != id).OrderByDescending(c => c.CreatedDate).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync()

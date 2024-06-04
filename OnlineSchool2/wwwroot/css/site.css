@@ -79,6 +79,19 @@ section {
     height: 300px;
 }
 
+.itd_card {
+    padding: 30px;
+    margin: 0 30px;
+}
+.itd_card:hover {
+    background-color: #eee;
+    border-radius: 20px;
+}
+
+.none_underline {
+    text-decoration: none;
+}
+
 .title_text {
     font-weight: 400;
 }

@@ -14,6 +14,8 @@ namespace OnlineSchool2.Models
 
         [StringLength(10000, MinimumLength = 10, ErrorMessage = "Введите описание (не менее 10 символов)")]
         public string? Description { get; set; }
+        public string? ShortDescription { get; set; }
+        public string? PublicDescription { get; set; }
 
         public string? PhotoPath { get; set; }
 

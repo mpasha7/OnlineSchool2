@@ -7,7 +7,7 @@ using System.Data;
 
 namespace OnlineSchool2.Pages.Students
 {
-    public class EditorModel : PageModel
+    public class EditorModel : CoachPageModel
     {
         private UserManager<IdentityUser> userManager;
         private SchoolContext db;

@@ -25,7 +25,7 @@ namespace OnlineSchool2.Controllers
             this.userManager = usrMgr;
         }
 
-        // GET: Courses        
+        // GET: Courses
         public async Task<IActionResult> Index()
         {
             ViewBag.IsCoach = User.IsInRole("Coach");
@@ -57,7 +57,8 @@ namespace OnlineSchool2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,PhotoPath,BeginQuestionnaire,EndQuestionnaire")] Course course)
+        public async Task<IActionResult> Create(
+            [Bind("Id,Title,Description,ShortDescription,PublicDescription,PhotoPath,BeginQuestionnaire,EndQuestionnaire")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +105,8 @@ namespace OnlineSchool2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> Edit(string path, int id, [Bind("Id,Title,Description,PhotoPath,BeginQuestionnaire,EndQuestionnaire")] Course course)
+        public async Task<IActionResult> Edit(string path, int id, 
+            [Bind("Id,Title,Description,ShortDescription,PublicDescription,PhotoPath,BeginQuestionnaire,EndQuestionnaire")] Course course)
         {
             if (id != course.Id)
             {

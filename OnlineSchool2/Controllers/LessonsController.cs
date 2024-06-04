@@ -11,7 +11,7 @@ using OnlineSchool2.Models;
 
 namespace OnlineSchool2.Controllers
 {
-    [Authorize(Roles = "Coach,Student")]    
+    [Authorize(Roles = "Coach,Student")]
     public class LessonsController : Controller
     {
         private readonly SchoolContext db;

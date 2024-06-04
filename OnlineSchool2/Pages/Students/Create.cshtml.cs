@@ -59,7 +59,7 @@ namespace OnlineSchool2.Pages.Students
                 }
                 if (result.Succeeded)
                 {
-                    if (CourseId > 0)
+                    if (CourseId != null && CourseId > 0)
                     {
                         Course? course = await db.Courses.FindAsync(CourseId);
                         StudentOfCourse studentOfCourse = new StudentOfCourse

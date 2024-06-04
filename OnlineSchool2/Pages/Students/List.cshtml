@@ -20,7 +20,6 @@
             <table class="table table-sm table-bordered">
                 <thead>
                     <tr class="text-center">
-                        <th class="col-4">ID</th>
                         <th>Имя</th>
                         <th>Email</th>
                         <th class="col-3"></th>
@@ -38,9 +37,8 @@
                         foreach (IdentityUser user in Model.Users)
                         {
                             <tr class="cell_justify">
-                                <td>@user.Id</td>
-                                <td><h6 class="color2">@user.UserName</h6></td>
-                                <td><h6 class="color2">@user.Email</h6></td>
+                                <td><h6 class="color2 ps-3">@user.UserName</h6></td>
+                                <td><h6 class="color2 ps-3">@user.Email</h6></td>
                                 <td class="text-center">
                                     <a class="btn btn-sm btn_itd_outline text-uppercase text-center" asp-page="Editor" asp-route-id="@user.Id" asp-route-mode="edit">Редактировать</a>
                                 </td>

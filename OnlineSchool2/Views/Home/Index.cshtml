@@ -19,9 +19,14 @@
     <div class="row">
         @foreach(var item in Model)
         {
-            <div class="col-md-6 col-sm-12 text-center text-uppercase pt-5">
-                <h3 class="color1">@item.Title</h3>
-                <img src="@Url.Content(item.PhotoPath)" alt="Фото" class="img-fluid itd_home_img" />
+            <div class="col-md-6 col-sm-12 text-center mt-3">
+                <a asp-controller="Home" asp-action="Course" asp-route-courseid="@item.Id" border="0" class="none_underline">
+                    <div class="text-center itd_card">
+                        <img src="@Url.Content(item.PhotoPath)" alt="Фото" class="img-fluid itd_home_img text-center" />
+                        <h3 class="color1 text-uppercase text-center my-2">@item.Title</h3>
+                        <h5 class="color1 mb-2">@item.ShortDescription</h5>
+                    </div>
+                </a>
             </div>
             counter++;
         }

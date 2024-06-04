@@ -10,7 +10,6 @@
     <table class="table table-sm table-bordered my-3">
         <thead>
             <tr class="text-center">
-                <th>ID</th>
                 <th>Название</th>
                 <th>Время создания</th>
                 <th class="col-4"></th>
@@ -28,7 +27,6 @@
                 foreach (Course course in Model.Courses)
                 {
                     <tr class="cell_justify">
-                        <td>@course.Id</td>
                         <td>@course.Title</td>
                         <td>@course.CreatedDate</td>
                         <td class="text-center">

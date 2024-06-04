@@ -1,0 +1,26 @@
+﻿@model OnlineSchool2.Models.Course
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-2 mb-3">
+            <h1 class="text-center text-uppercase color2">
+                @ViewData["Title"]
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <img src="@Url.Content(Model.PhotoPath)" alt="Фото" class="img-fluid itd_big_img" />
+        </div>
+    </div>
+
+    <div class="row">
+        <p style="font-size: 25px" class="col-12 text-center color1 mt-3 mb-5">
+            @Model.PublicDescription
+        </p>
+    </div>
+</div>

@@ -25,10 +25,9 @@
     <table class="table table-sm table-bordered my-3">
         <thead>
             <tr class="text-center">
-                <th class="col-4">ID</th>
                 <th>Имя</th>
                 <th>Email</th>
-                <th></th>
+                <th class="col-4"></th>
             </tr>
         </thead>
         <tbody>
@@ -43,7 +42,6 @@
                 foreach (IdentityUser user in Model.Users)
                 {
                     <tr class="cell_justify">
-                        <td>@user.Id</td>
                         <td>@user.UserName</td>
                         <td>@user.Email</td>
                         <td class="text-center">

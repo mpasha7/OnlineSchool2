@@ -64,10 +64,6 @@ namespace OnlineSchool2.Controllers
         public async Task<IActionResult> Profile()
         {
             IdentityUser? user = await userManager.FindByNameAsync(User.Identity.Name);
-            //if (await userManager.IsInRoleAsync(user, "Admin"))
-            //{
-
-            //}
             return View(user);
         }
 
