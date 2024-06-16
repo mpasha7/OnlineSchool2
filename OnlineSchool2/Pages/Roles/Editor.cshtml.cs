@@ -5,6 +5,7 @@ using System.Data;
 
 namespace OnlineSchool2.Pages.Roles
 {
+    [IgnoreAntiforgeryToken]
     public class EditorModel : AdminPageModel
     {
         private UserManager<IdentityUser> userManager;
@@ -47,9 +48,11 @@ namespace OnlineSchool2.Pages.Roles
             {
                 result = await userManager.AddToRoleAsync(user, rolename);
             }
+
+            string roleId = Role.Id;
             if (result.Succeeded)
             {
-                return RedirectToPage();
+                return RedirectToPage(new { id = roleId });
             }
             else
             {

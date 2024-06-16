@@ -4,8 +4,8 @@ namespace OnlineSchool2.Models
 {
     public class UserModel
     {
-        [Required]
-        public string Id { get; set; }
+        //[Required]
+        //public string Id { get; set; }
 
         [Required]
         public string UserName { get; set; }

@@ -6,7 +6,7 @@ namespace OnlineSchool2
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<SchoolContext>(opts =>
@@ -48,7 +48,7 @@ namespace OnlineSchool2
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            IdentitySeedData.CreateAdminAccount(app.Services, app.Configuration);
+            await IdentitySeedData.CreateAdminAccountAsync(app.Services, app.Configuration);
             SeedData.EnsurePopulated(app);            
             app.Run();
         }

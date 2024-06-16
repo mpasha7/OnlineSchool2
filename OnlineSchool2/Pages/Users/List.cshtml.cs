@@ -5,6 +5,7 @@ using System.Data;
 
 namespace OnlineSchool2.Pages.Users
 {
+    [IgnoreAntiforgeryToken]
     public class ListModel : AdminPageModel
     {
         private UserManager<IdentityUser> userManager;

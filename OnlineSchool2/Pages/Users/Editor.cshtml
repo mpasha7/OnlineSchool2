@@ -10,11 +10,12 @@
     <form method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <div class="form-group">
+        <input name="Id" type="hidden" value="@Model.Id" />
+
+@*         <div class="form-group">
             <label>ID</label>
             <input name="Id" class="form-control" value="@Model.Id" disabled />
-            <input name="Id" type="hidden" value="@Model.Id" />
-        </div>
+        </div> *@
 
         <div class="form-group mt-3">
             <label asp-for="UserName">Имя пользователя</label>

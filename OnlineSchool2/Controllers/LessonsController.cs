@@ -68,7 +68,7 @@ namespace OnlineSchool2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Create(int courseid, int maxnumber, [Bind("Id,Number,Title,Description,VideoLink")] Lesson lesson)
         {
@@ -130,7 +130,7 @@ namespace OnlineSchool2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
         public async Task<IActionResult> Edit(int? courseid, int oldnumber, int id, [Bind("Id,Number,Title,Description,VideoLink")] Lesson lesson)
         {
@@ -220,7 +220,7 @@ namespace OnlineSchool2.Controllers
 
         // POST: Lessons/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
         public async Task<IActionResult> DeleteConfirmed(int? courseid, int id)
         {

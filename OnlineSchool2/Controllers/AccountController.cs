@@ -25,7 +25,7 @@ namespace OnlineSchool2.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
             if (ModelState.IsValid)
@@ -73,21 +73,21 @@ namespace OnlineSchool2.Controllers
             IdentityUser? user = await userManager.FindByNameAsync(User.Identity.Name);
             return View(new UserModel
             {
-                Id = user.Id,
+                //Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email
             });
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> EditProfile(UserModel model)
         {
             
             if (ModelState.IsValid)
             {
-                IdentityUser user = await userManager.FindByIdAsync(model.Id);
+                IdentityUser user = await userManager.FindByNameAsync(User.Identity.Name);
                 if (await userManager.CheckPasswordAsync(user, model.OldPassword))
                 {
                     user.UserName = model.UserName;

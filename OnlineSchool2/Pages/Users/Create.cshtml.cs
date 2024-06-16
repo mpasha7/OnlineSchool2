@@ -6,26 +6,31 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OnlineSchool2.Pages.Users
 {
+    [IgnoreAntiforgeryToken]
     public class CreateModel : AdminPageModel
     {
         private UserManager<IdentityUser> userManager;
         private RoleManager<IdentityRole> roleManager;
 
         [BindProperty]
-        [Required]
+        [Required(ErrorMessage = "¬ведите им€")]
         public string UserName { get; set; }
 
         [BindProperty]
-        [Required]
+        [Required(ErrorMessage = "¬ведите Email")]
         [EmailAddress]
         public string Email { get; set; }
 
         [BindProperty]
-        [Required]
+        [Required(ErrorMessage = "¬ведите пароль")]
         public string Password { get; set; }
 
         [BindProperty]
-        public string? RoleName { get; set; }//Id
+        [Compare("Password", ErrorMessage = "ѕароли не совпадают")]
+        public string ConfirmPassword { get; set; }
+
+        [BindProperty]
+        public string? RoleId { get; set; }
         public IEnumerable<IdentityRole> Roles { get; set; }
 
         public CreateModel(UserManager<IdentityUser> usrMgr, RoleManager<IdentityRole> roleMgr)
@@ -49,9 +54,9 @@ namespace OnlineSchool2.Pages.Users
                     Email = Email
                 };
                 IdentityResult result = await userManager.CreateAsync(user, Password);
-                if (!string.IsNullOrWhiteSpace(RoleName) && RoleName != "None" && result.Succeeded)
+                if (!string.IsNullOrWhiteSpace(RoleId) && RoleId != "None" && result.Succeeded)
                 {
-                    IdentityRole role = await roleManager.FindByIdAsync(RoleName);
+                    IdentityRole role = await roleManager.FindByIdAsync(RoleId);
                     result = await userManager.AddToRoleAsync(user, role.Name);
                 }
                 if (result.Succeeded)

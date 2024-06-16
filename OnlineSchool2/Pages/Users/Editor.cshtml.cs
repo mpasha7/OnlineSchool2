@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OnlineSchool2.Pages.Users
 {
+    [IgnoreAntiforgeryToken]
     public class EditorModel : AdminPageModel
     {
         private UserManager<IdentityUser> userManager;
@@ -24,6 +25,7 @@ namespace OnlineSchool2.Pages.Users
 
         [BindProperty]
         public string? Password { get; set; }
+
         [BindProperty]
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         public string? ConfirmPassword { get; set; }

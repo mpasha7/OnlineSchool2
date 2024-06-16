@@ -43,9 +43,9 @@ namespace OnlineSchool2.Models
                         CoachGuid = secondCoachId,
                         Lessons = new List<Lesson>
                         {
-                            new Lesson { Number = 1, Title = "Lesson 3.1", Description = lorem1, VideoLink = videoLink },
-                            new Lesson { Number = 2, Title = "Lesson 3.2", Description = lorem2, VideoLink = videoLink },
-                            new Lesson { Number = 3, Title = "Lesson 3.3", Description = lorem2, VideoLink = videoLink }
+                            new Lesson { Number = 1, Title = "Lesson 1.1", Description = lorem1, VideoLink = videoLink },
+                            new Lesson { Number = 2, Title = "Lesson 1.2", Description = lorem2, VideoLink = videoLink },
+                            new Lesson { Number = 3, Title = "Lesson 1.3", Description = lorem2, VideoLink = videoLink }
                         },
                         Students = new List<StudentOfCourse>
                         {
@@ -63,9 +63,9 @@ namespace OnlineSchool2.Models
                         CoachGuid = firstCoachId,
                         Lessons = new List<Lesson>
                         {
-                            new Lesson { Number = 1, Title = "Lesson 1.1", Description = lorem1, VideoLink = videoLink },
-                            new Lesson { Number = 2, Title = "Lesson 1.2", Description = lorem2, VideoLink = videoLink },
-                            new Lesson { Number = 3, Title = "Lesson 1.3", Description = lorem2, VideoLink = videoLink }
+                            new Lesson { Number = 1, Title = "Lesson 2.1", Description = lorem1, VideoLink = videoLink },
+                            new Lesson { Number = 2, Title = "Lesson 2.2", Description = lorem2, VideoLink = videoLink },
+                            new Lesson { Number = 3, Title = "Lesson 2.3", Description = lorem2, VideoLink = videoLink }
                         },
                         Students = new List<StudentOfCourse>
                         {
@@ -83,9 +83,9 @@ namespace OnlineSchool2.Models
                         CoachGuid = firstCoachId,
                         Lessons = new List<Lesson>
                         {
-                            new Lesson { Number = 1, Title = "Lesson 2.1", Description = lorem1, VideoLink = videoLink },
-                            new Lesson { Number = 2, Title = "Lesson 2.2", Description = lorem2, VideoLink = videoLink },
-                            new Lesson { Number = 3, Title = "Lesson 2.3", Description = lorem2, VideoLink = videoLink }
+                            new Lesson { Number = 1, Title = "Lesson 3.1", Description = lorem1, VideoLink = videoLink },
+                            new Lesson { Number = 2, Title = "Lesson 3.2", Description = lorem2, VideoLink = videoLink },
+                            new Lesson { Number = 3, Title = "Lesson 3.3", Description = lorem2, VideoLink = videoLink }
                         },
                         Students = new List<StudentOfCourse>
                         {
@@ -102,9 +102,9 @@ namespace OnlineSchool2.Models
                         CoachGuid = firstCoachId,
                         Lessons = new List<Lesson>
                         {
-                            new Lesson { Number = 1, Title = "Lesson 3.1", Description = lorem1, VideoLink = videoLink },
-                            new Lesson { Number = 2, Title = "Lesson 3.2", Description = lorem2, VideoLink = videoLink },
-                            new Lesson { Number = 3, Title = "Lesson 3.3", Description = lorem2, VideoLink = videoLink }
+                            new Lesson { Number = 1, Title = "Lesson 4.1", Description = lorem1, VideoLink = videoLink },
+                            new Lesson { Number = 2, Title = "Lesson 4.2", Description = lorem2, VideoLink = videoLink },
+                            new Lesson { Number = 3, Title = "Lesson 4.3", Description = lorem2, VideoLink = videoLink }
                         },
                         Students = new List<StudentOfCourse>
                         {

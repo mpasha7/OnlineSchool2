@@ -6,10 +6,10 @@ namespace OnlineSchool2.Models
 {
     public static class IdentitySeedData
     {
-        public static void CreateAdminAccount(IServiceProvider serviceProvider, IConfiguration configuration)
-        {
-            CreateAdminAccountAsync(serviceProvider, configuration).Wait();
-        }
+        //public static void CreateAdminAccount(IServiceProvider serviceProvider, IConfiguration configuration)
+        //{
+        //    CreateAdminAccountAsync(serviceProvider, configuration).Wait();
+        //}
 
         public static async Task CreateAdminAccountAsync(IServiceProvider serviceProvider, IConfiguration configuration)
         {

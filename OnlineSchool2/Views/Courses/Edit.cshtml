@@ -30,15 +30,27 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Description" class="control-label mt-3"><h5 class="color2">Описание</h5></label>
+                    <label asp-for="PhotoPath" class="control-label mt-3"><h5 class="color2">Изменить фото курса?</h5></label>
+                    <input type="file" asp-for="PhotoPath" class="form-control" />
+                    <span asp-validation-for="PhotoPath" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label mt-3"><h5 class="color2">Изменить вступительный текст</h5></label>
                     <textarea asp-for="Description" class="form-control" rows="5"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="PhotoPath" class="control-label mt-3"><h5 class="color2">Изменить фото курса?</h5></label>
-                    <input type="file" asp-for="PhotoPath" class="form-control" />
-                    <span asp-validation-for="PhotoPath" class="text-danger"></span>
+                    <label asp-for="ShortDescription" class="control-label mt-3"><h5 class="color2">Изменить краткое описание</h5></label>
+                    <textarea asp-for="ShortDescription" class="form-control" rows="2"></textarea>
+                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PublicDescription" class="control-label mt-3"><h5 class="color2">Изменить публичное описание</h5></label>
+                    <textarea asp-for="PublicDescription" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="PublicDescription" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
